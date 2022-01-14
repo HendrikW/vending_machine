@@ -1,5 +1,9 @@
 # README
 
+## Setup
+
+Have to create a `.env` file with a `API_SECRET_KEY=in-dev-environment-can-use-anything` entry for use with jwt tokens
+
 ## Notes
 
 * user cannot reset their password. also no e-mail confirmation. using an authentication gem like https://github.com/heartcombo/devise could be a good choice as a next step

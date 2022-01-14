@@ -5,4 +5,8 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :users, only: [:create]
+  post '/login', to: 'users#login'
+  post '/deposit', to: 'users#deposit'
+
+  
 end

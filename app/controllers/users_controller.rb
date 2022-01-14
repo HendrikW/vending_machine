@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     wrap_parameters false
+    before_action :require_login, except: [:create, :login]
 
     def create
         begin
@@ -13,9 +14,19 @@ class UsersController < ApplicationController
         if user.save 
             render json: user
         else
-            render json: { message: 'errors during user creation', errors: user.errors }, status: 400
+            render json: { message: 'errors during user creation', errors: user.errors }, status: :bad_request
         end
 
+    end
+
+    # generates JWT token (valid for 2 minutes)
+    def login
+        user = User.find_by("lower(username) = ?", user_params[:username].downcase)
+        if user && user.authenticate(user_params[:password])
+          render json: { token: jwt_token(user), user_id: user.id }, status: :created 
+        else 
+          render json: { message:  "incorrect username or password"  }, status: :unprocessable_entity
+        end 
     end
 
     private
