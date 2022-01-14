@@ -1,6 +1,6 @@
 # README
 
-## Bonus
+## Regarding the Bonus ..
 
 * since JWT authentication is stateless the client can destroy all sessions by deleting the respective token(s)
 
@@ -12,6 +12,8 @@
 * create a `.env` file with a `API_SECRET_KEY=in-dev-environment-can-use-anything` entry for use with jwt tokens
 
 * run `bundle install` and then `bin/rails s`
+
+* run `rake test` to run the included tests
 
 
 ## Notes
@@ -29,3 +31,5 @@
 * add meaningful error messages for the case the user gets deleted from the database but the token is still being used with that `user_id`
 
 * I have more experience with RSpec and a more mocking & stubbing approach to testing. Here I wanted to work with the tools that come with Rails 'out of the box'
+
+* the tests for /buy route need to be expanded to test more edge cases

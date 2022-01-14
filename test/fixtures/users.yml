@@ -3,7 +3,7 @@
 buyerOne:
   username: buyer_number_one
   password_digest: doesntmatter
-  deposit: 35
+  deposit: 95
   role: buyer
 
 sellerOne:

@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
       return
     end
 
-    # prevent lost updates using locks (#with_lock also creates a transaction)
+    # prevent lost updates using locks (note: #with_lock also creates a transaction)
     product.with_lock do 
       product.amount_available -= params[:amount]
       product.save!

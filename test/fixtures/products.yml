@@ -4,3 +4,4 @@ one:
   amount_available: 50
   product_name: toycar_1
   cost: 15
+  seller: sellerOne
