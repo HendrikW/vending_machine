@@ -22,8 +22,6 @@ class User < ApplicationRecord
         return false
       end
       self.deposit = self.deposit + coin_value
-      puts "self.deposit"
-      puts self.deposit
       true
     end
 
