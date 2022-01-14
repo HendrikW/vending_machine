@@ -63,10 +63,11 @@ class ProductsController < ApplicationController
       return
     end
 
-    # note in actual fact for more safety this should even possibly use locking of the database to prevent lost updates
-    Product.transaction do 
+    # prevent lost updates using locks (with_lock also creates a transaction)
+    product.with_lock do 
       product.amount_available -= params[:amount]
       product.save!
+      current_user.lock! # not sure .. ActiveRecord probably already does this as part of #update!
       current_user.update!(deposit: current_user.deposit - total_cost)
     end
 
