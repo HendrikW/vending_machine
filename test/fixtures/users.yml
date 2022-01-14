@@ -1,13 +1,12 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  username: MyString
-  password_digest: MyString
-  deposit: 1
-  role: 1
+buyerOne:
+  username: buyer_number_one
+  password_digest: doesntmatter
+  deposit: 35
+  role: buyer
 
-two:
-  username: MyString
-  password_digest: MyString
-  deposit: 1
-  role: 1
+sellerOne:
+  username: seller_number_one
+  password_digest: doesntmatter
+  role: seller

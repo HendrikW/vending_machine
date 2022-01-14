@@ -1,13 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  amount_available: 1
-  product_name: MyString
-  seller_id: 1
-  cost: 1
-
-two:
-  amount_available: 1
-  product_name: MyString
-  seller_id: 1
-  cost: 1
+  amount_available: 50
+  product_name: toycar_1
+  cost: 15

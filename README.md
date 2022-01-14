@@ -27,3 +27,5 @@
 * probably want to use serializers for json responses, or a gem like https://github.com/rails/jbuilder (instead of overriding `as_json`)
 
 * add meaningful error messages for the case the user gets deleted from the database but the token is still being used with that `user_id`
+
+* I have more experience with RSpec and a more mocking & stubbing approach to testing. Here I wanted to work with the tools that come with Rails 'out of the box'
