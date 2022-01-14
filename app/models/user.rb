@@ -35,6 +35,17 @@ class User < ApplicationRecord
       false
     end
 
+    # the change the vending machine has to return with optimal coin allocation
+    def availabe_change
+      result = []
+      leftover = self.deposit 
+      [100,50,20,10,5].each do |coin_value|
+        result << leftover / coin_value
+        leftover = leftover % coin_value
+      end
+      return result
+    end
+
     def as_json(options = nil)
       super({ only: [:username, :role, :deposit] }.merge(options || {}))
     end

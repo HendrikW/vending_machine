@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :require_login
-  before_action :user_is_seller, except: [:show] # buyers can only look, not modify products
+  before_action :user_is_seller, except: [:show, :buy] # buyers can only look, not modify products
+  before_action :user_is_buyer, only: [:buy]
 
   def show
     if product = Product.find_by_id(params[:id])
@@ -42,6 +43,35 @@ class ProductsController < ApplicationController
     product = Product.find_by!(id: params[:id], seller: current_user)
     product.destroy
     render json: { message: 'success'}, status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render json: { message: 'not found'}, status: :not_found
+  end
+
+
+  def buy
+    product = Product.find(params[:product_id])
+
+    total_cost = (product.cost * params[:amount])
+
+    if current_user.deposit < total_cost
+      render json: { message: 'not enough funds'}, status: :ok
+      return
+    end
+
+    if product.amount_available < params[:amount]
+      render json: { message: 'amount of this product not available'}, status: :ok
+      return
+    end
+
+    # note in actual fact for more safety this should even possibly use locking of the database to prevent lost updates
+    Product.transaction do 
+      product.amount_available -= params[:amount]
+      product.save!
+      current_user.update!(deposit: current_user.deposit - total_cost)
+    end
+
+    render json: { funds_spent: total_cost, purchased_product: product.product_name, availabe_change: current_user.availabe_change }
+
   rescue ActiveRecord::RecordNotFound
     render json: { message: 'not found'}, status: :not_found
   end

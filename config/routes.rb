@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   post '/reset', to: 'users#reset'
 
   resources :products, only: [:show, :create, :update, :destroy]
+  post '/buy', to: 'products#buy'
 end
