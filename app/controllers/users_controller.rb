@@ -29,6 +29,29 @@ class UsersController < ApplicationController
         end 
     end
 
+    def deposit 
+        unless current_user_role === "buyer"
+            render json: { message: 'only buyers can do this action' }, status: :bad_request
+            return
+        end
+
+        if User.find(current_user_id).deposit_coin!(params[:coin])
+            render  json: { message: 'success' }, status: :ok
+        else
+            render  json: { message: 'not a valid coin value' }, status: :bad_request
+        end
+    end
+
+    def reset
+        unless current_user_role === "buyer"
+            render json: { message: 'only buyers can do this action' }, status: :bad_request
+            return
+        end
+
+        User.update(current_user_id, { deposit: 0 })
+        render  json: { message: 'success' }, status: :ok
+    end
+
     private
 
     def user_params
