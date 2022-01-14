@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Notes
 
-Things you may want to cover:
+* user cannot reset their password. also no e-mail confirmation. using an authentication gem like https://github.com/heartcombo/devise could be a good choice as a next step
 
-* Ruby version
+* role-based access very simple with just enum in the database. could use a gem like https://github.com/CanCanCommunity/cancancan instead
 
-* System dependencies
+* next step should also add unit tests for models (e.g. validations)
 
-* Configuration
+* shouldn't use sqlite in any production setting (even probably should use PostgreSQL/MySQL in development teams). for prototyping sqlite is fine I guess
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* probably want to use serializers for json responses, or a gem like https://github.com/rails/jbuilder (instead of overriding `as_json`)
