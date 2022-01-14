@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     wrap_parameters false
     before_action :require_login, except: [:create, :login]
+    before_action :user_is_buyer, except: [:create, :login] # currently all routes in this controller except create, login are for buyers only
 
     def create
         begin
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
 
     end
 
-    # generates JWT token (valid for 2 minutes)
+    # generates JWT token (valid for 20 minutes)
     def login
         user = User.find_by("lower(username) = ?", user_params[:username].downcase)
         if user && user.authenticate(user_params[:password])
@@ -30,11 +31,6 @@ class UsersController < ApplicationController
     end
 
     def deposit 
-        unless current_user_role === "buyer"
-            render json: { message: 'only buyers can do this action' }, status: :bad_request
-            return
-        end
-
         if User.find(current_user_id).deposit_coin!(params[:coin])
             render  json: { message: 'success' }, status: :ok
         else
@@ -43,14 +39,10 @@ class UsersController < ApplicationController
     end
 
     def reset
-        unless current_user_role === "buyer"
-            render json: { message: 'only buyers can do this action' }, status: :bad_request
-            return
-        end
-
         User.update(current_user_id, { deposit: 0 })
         render  json: { message: 'success' }, status: :ok
     end
+
 
     private
 

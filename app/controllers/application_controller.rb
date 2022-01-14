@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
     private
 
     def jwt_token(user)
-        exp = Time.now.to_i + (2 * 60)  # 2 minutes
+        exp = Time.now.to_i + (20 * 60)  # 20 minutes
         payload = { user_id: user.id, role: user.role, exp: exp }
         JWT.encode payload, hmac_secret, 'HS256'
     end
@@ -41,11 +41,27 @@ class ApplicationController < ActionController::API
         current_token_payload && current_token_payload['user_id']
     end
 
+    def current_user
+        User.find(current_user_id)
+    end
+
     def current_user_role
         current_token_payload && current_token_payload['role']
     end
 
     def require_login
         render json: {error: 'Unauthorized'}, status: :unauthorized if !client_has_valid_token?
+    end
+
+    def user_is_buyer
+        unless current_user_role === "buyer"
+            render json: { message: 'only buyers can do this action' }, status: :bad_request
+        end
+    end
+
+    def user_is_seller
+        unless current_user_role === "seller"
+            render json: { message: 'only sellers can do this action' }, status: :bad_request
+        end
     end
 end

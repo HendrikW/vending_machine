@@ -1,5 +1,12 @@
 # README
 
+## Bonus
+
+* since JWT authentication is stateless the client can destroy all sessions by deleting the respective token(s)
+
+* the whole application should be reasonably secure, although audit/review from additional experts would be advisable before production deploy ;)
+
+
 ## Setup
 
 * create a `.env` file with a `API_SECRET_KEY=in-dev-environment-can-use-anything` entry for use with jwt tokens

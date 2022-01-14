@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   post '/deposit', to: 'users#deposit'
   post '/reset', to: 'users#reset'
 
-
+  resources :products, only: [:show, :create, :update, :destroy]
 end

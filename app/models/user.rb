@@ -13,6 +13,8 @@ class User < ApplicationRecord
     enum role: [:buyer, :seller]
     validates :role, presence: true
 
+    has_many :products, foreign_key: :seller_id
+
     def deposit
       super || 0
     end
