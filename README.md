@@ -2,7 +2,13 @@
 
 ## Regarding the Bonus ..
 
-* since JWT authentication is stateless the client can destroy all sessions by deleting the respective token(s)
+*  JWT authentication is stateless 
+    * this means persisting sessions server-side would defeat the purpose to some degree
+    * if we wanted to enable the user to log out all their clients/devices session persistence on the server would have to be implemented
+    * other approaches exist. e.g.
+        * checking session/state only for certain more critical operations
+        * using a long running token and re-issuing shorter-lived tokens periodically
+    * note that Rails' default CookieStorage "suffers" from the same limitation (in a way it's pretty similar to JWT)
 
 * the whole application should be reasonably secure, although audit/review from additional experts would be advisable before production deploy ;)
 
@@ -27,9 +33,5 @@
 * shouldn't use sqlite in any production setting (even probably should use PostgreSQL/MySQL in development teams). for prototyping sqlite is fine I guess
 
 * probably want to use serializers for json responses, or a gem like https://github.com/rails/jbuilder (instead of overriding `as_json`)
-
-* add meaningful error messages for the case the user gets deleted from the database but the token is still being used with that `user_id`
-
-* I have more experience with RSpec and a more mocking & stubbing approach to testing. Here I wanted to work with the tools that come with Rails 'out of the box'
 
 * the tests for /buy route need to be expanded to test more edge cases
