@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     wrap_parameters false
     before_action :require_login, except: [:create, :login]
-    before_action :user_is_buyer, except: [:create, :login] # currently all routes in this controller except create, login are for buyers only
+    before_action :user_is_buyer, except: [:create, :login, :update, :delete] 
 
     def create
         begin
@@ -20,13 +20,36 @@ class UsersController < ApplicationController
 
     end
 
+    # PUT /account
+    def update
+        if current_user.authenticate(user_params[:password])
+            if current_user.update(password: params[:new_password], password_confirmation: params[:new_password_confirmation])
+                render json: current_user
+            else
+                render json: { message: 'errors during update', errors: current_user.errors }, status: :bad_request
+            end
+        else
+            render json: { message:  "incorrect password"  }, status: :unauthorized
+        end
+    end
+
+    # DELETE /account
+    def delete
+        if current_user.authenticate(user_params[:password])
+            current_user.destroy! 
+            render json: { message: 'success' }
+        else
+            render json: { message:  "incorrect password"  }, status: :unauthorized
+        end
+    end    
+
     # generates JWT token (valid for 20 minutes)
     def login
         user = User.find_by("lower(username) = ?", user_params[:username].downcase)
         if user && user.authenticate(user_params[:password])
           render json: { token: jwt_token(user), user_id: user.id }, status: :created 
         else 
-          render json: { message:  "incorrect username or password"  }, status: :unprocessable_entity
+          render json: { message:  "incorrect username or password"  }, status: :unauthorized
         end 
     end
 

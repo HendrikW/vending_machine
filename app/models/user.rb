@@ -13,7 +13,7 @@ class User < ApplicationRecord
     enum role: [:buyer, :seller]
     validates :role, presence: true
 
-    has_many :products, foreign_key: :seller_id
+    has_many :products, foreign_key: :seller_id # note  "dependent: :destroy"  is being handled at database level using on_delete: cascase
 
     def deposit
       super || 0

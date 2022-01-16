@@ -27,8 +27,6 @@ class ProductsController < ApplicationController
     else
       render json: { message: 'errors during product creation', errors: product.errors }, status: :bad_request
     end
-  rescue ActiveRecord::RecordNotFound
-      render json: { message: 'not found'}, status: :not_found
   end
 
   def update
@@ -42,16 +40,12 @@ class ProductsController < ApplicationController
     else
       render json: { message: 'errors during product update', errors: product.errors }, status: :bad_request
     end
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: 'not found'}, status: :not_found
   end
 
   def destroy
     product = Product.find_by!(id: params[:id], seller: current_user)
     product.destroy
     render json: { message: 'success'}, status: :ok
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: 'not found'}, status: :not_found
   end
 
 
@@ -80,8 +74,6 @@ class ProductsController < ApplicationController
 
     render json: { funds_spent: total_cost, purchased_product: product.product_name, availabe_change: current_user.availabe_change }
 
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: 'not found'}, status: :not_found
   end
 
 
