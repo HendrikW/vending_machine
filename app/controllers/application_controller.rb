@@ -55,13 +55,13 @@ class ApplicationController < ActionController::API
 
     def user_is_buyer
         unless current_user_role === "buyer"
-            render json: { message: 'only buyers can do this action' }, status: :bad_request
+            render json: { message: 'only buyers can do this action' }, status: :unauthorized
         end
     end
 
     def user_is_seller
         unless current_user_role === "seller"
-            render json: { message: 'only sellers can do this action' }, status: :bad_request
+            render json: { message: 'only sellers can do this action' }, status: :unauthorized
         end
     end
 end

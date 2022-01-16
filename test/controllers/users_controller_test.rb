@@ -18,7 +18,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should not deposit for sellers" do
     post "/deposit", as: :json,  params: { "coin": 20 }, headers: { "HTTP_AUTHORIZATION" => "Bearer " + create_jwt_token(@seller) }
     
-    assert_response :bad_request
+    assert_response :unauthorized
     assert_equal @response.parsed_body['message'], 'only buyers can do this action' 
   end
 

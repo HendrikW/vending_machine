@@ -35,3 +35,4 @@
 * probably want to use serializers for json responses, or a gem like https://github.com/rails/jbuilder (instead of overriding `as_json`)
 
 * the tests for /buy route need to be expanded to test more edge cases
+* tests for other product CRUD should also test more edge cases (like user is not owner of current product etc)
