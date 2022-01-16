@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create]
   post '/login', to: 'users#login'
   post '/deposit', to: 'users#deposit'
-  post '/reset', to: 'users#reset'
+  delete '/reset', to: 'users#reset'
 
   resources :products, only: [:show, :create, :update, :destroy]
   post '/buy', to: 'products#buy'

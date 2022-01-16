@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  wrap_parameters false
   before_action :require_login
   before_action :user_is_seller, except: [:show, :buy] # buyers can only look, not modify products
   before_action :user_is_buyer, only: [:buy]

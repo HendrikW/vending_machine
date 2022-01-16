@@ -19,7 +19,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal @response.parsed_body['funds_spent'], 2 * @product.cost
     assert_equal @response.parsed_body['purchased_product'], @product.product_name
-    assert_equal @response.parsed_body['availabe_change'], [0, 1, 0, 1, 1] # 50 + 10 + 5 = 65 left 
+    assert_equal @response.parsed_body['availabe_change'], ["0 x 100", "1 x 50", "0 x 20", "1 x 10", "1 x 5"] # 50 + 10 + 5 = 65 left 
     
     assert_equal User.find(@user.id).deposit, current_deposit - 2 * @product.cost
     assert_equal Product.find(@product.id).amount_available, current_amount_available - 2

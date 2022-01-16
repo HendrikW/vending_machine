@@ -31,16 +31,17 @@ class UsersController < ApplicationController
     end
 
     def deposit 
-        if User.find(current_user_id).deposit_coin!(params[:coin])
-            render  json: { message: 'success' }, status: :ok
+        if current_user.deposit_coin!(params[:coin])
+            render  json: { message: 'success', deposit: current_user.deposit }, status: :ok
         else
             render  json: { message: 'not a valid coin value' }, status: :bad_request
         end
     end
 
     def reset
-        User.update(current_user_id, { deposit: 0 })
-        render  json: { message: 'success' }, status: :ok
+        leftover_change = current_user.availabe_change
+        current_user.update!({ deposit: 0 })
+        render  json: { availabe_change: leftover_change }, status: :ok
     end
 
 

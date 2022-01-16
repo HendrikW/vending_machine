@@ -42,7 +42,7 @@ class ApplicationController < ActionController::API
     end
 
     def current_user
-        User.find(current_user_id)
+        @user ||= User.find(current_user_id)
     end
 
     def current_user_role

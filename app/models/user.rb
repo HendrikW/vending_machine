@@ -40,7 +40,7 @@ class User < ApplicationRecord
       result = []
       leftover = self.deposit 
       [100,50,20,10,5].each do |coin_value|
-        result << leftover / coin_value
+        result << "#{leftover / coin_value} x #{coin_value}"
         leftover = leftover % coin_value
       end
       return result
