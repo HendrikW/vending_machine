@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_140859) do
+ActiveRecord::Schema.define(version: 2022_01_16_160030) do
 
   create_table "products", force: :cascade do |t|
     t.integer "amount_available"
@@ -32,5 +32,5 @@ ActiveRecord::Schema.define(version: 2022_01_14_140859) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "products", "users", column: "seller_id"
+  add_foreign_key "products", "users", column: "seller_id", on_delete: :cascade
 end

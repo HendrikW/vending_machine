@@ -1,7 +1,14 @@
 class ProductsController < ApplicationController
+  wrap_parameters false
   before_action :require_login
-  before_action :user_is_seller, except: [:show, :buy] # buyers can only look, not modify products
+  before_action :user_is_seller, except: [:index, :show, :buy] # buyers can only look, not modify products
   before_action :user_is_buyer, only: [:buy]
+
+  # TODO: implement pagination
+  def index
+    products = Product.all
+    render json: products
+  end
 
   def show
     if product = Product.find_by_id(params[:id])
@@ -20,8 +27,6 @@ class ProductsController < ApplicationController
     else
       render json: { message: 'errors during product creation', errors: product.errors }, status: :bad_request
     end
-  rescue ActiveRecord::RecordNotFound
-      render json: { message: 'not found'}, status: :not_found
   end
 
   def update
@@ -35,16 +40,12 @@ class ProductsController < ApplicationController
     else
       render json: { message: 'errors during product update', errors: product.errors }, status: :bad_request
     end
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: 'not found'}, status: :not_found
   end
 
   def destroy
     product = Product.find_by!(id: params[:id], seller: current_user)
     product.destroy
     render json: { message: 'success'}, status: :ok
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: 'not found'}, status: :not_found
   end
 
 
@@ -73,8 +74,6 @@ class ProductsController < ApplicationController
 
     render json: { funds_spent: total_cost, purchased_product: product.product_name, availabe_change: current_user.availabe_change }
 
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: 'not found'}, status: :not_found
   end
 
 

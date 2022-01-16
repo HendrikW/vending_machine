@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :users, only: [:create]
+  put '/account', to: 'users#update'
+  delete '/account', to: 'users#delete'
   post '/login', to: 'users#login'
   post '/deposit', to: 'users#deposit'
-  post '/reset', to: 'users#reset'
+  delete '/reset', to: 'users#reset'
 
-  resources :products, only: [:show, :create, :update, :destroy]
+  resources :products, only: [:index, :show, :create, :update, :destroy]
   post '/buy', to: 'products#buy'
 end

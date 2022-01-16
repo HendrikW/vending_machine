@@ -1,6 +1,13 @@
 class ApplicationController < ActionController::API
 
-
+    rescue_from ActiveRecord::RecordNotFound do |e|
+        if e.model === "User"
+            render json: { error: 'user not found' }, status: :not_found
+        else
+            render json: { error: 'not found' }, status: :not_found
+        end
+        
+    end
 
     private
 
@@ -42,7 +49,7 @@ class ApplicationController < ActionController::API
     end
 
     def current_user
-        User.find(current_user_id)
+        @user ||= User.find(current_user_id)        
     end
 
     def current_user_role
@@ -55,13 +62,13 @@ class ApplicationController < ActionController::API
 
     def user_is_buyer
         unless current_user_role === "buyer"
-            render json: { message: 'only buyers can do this action' }, status: :bad_request
+            render json: { message: 'only buyers can do this action' }, status: :unauthorized
         end
     end
 
     def user_is_seller
         unless current_user_role === "seller"
-            render json: { message: 'only sellers can do this action' }, status: :bad_request
+            render json: { message: 'only sellers can do this action' }, status: :unauthorized
         end
     end
 end

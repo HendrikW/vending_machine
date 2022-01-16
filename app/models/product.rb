@@ -17,4 +17,8 @@ class Product < ApplicationRecord
           errors.add(:cost, "has to be a multiple of five")
         end
     end
+
+    def as_json(options = nil)
+        super({ only: [:id, :product_name, :amount_available, :cost, :seller_id] }.merge(options || {}))
+    end
 end

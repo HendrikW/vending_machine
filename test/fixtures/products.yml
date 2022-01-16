@@ -5,3 +5,9 @@ one:
   product_name: toycar_1
   cost: 15
   seller: sellerOne
+
+two:
+  amount_available: 14
+  product_name: toycar_2
+  cost: 95
+  seller: sellerOne

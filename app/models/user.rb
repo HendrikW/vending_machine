@@ -13,7 +13,7 @@ class User < ApplicationRecord
     enum role: [:buyer, :seller]
     validates :role, presence: true
 
-    has_many :products, foreign_key: :seller_id
+    has_many :products, foreign_key: :seller_id # note  "dependent: :destroy"  is being handled at database level using on_delete: cascase
 
     def deposit
       super || 0
@@ -40,7 +40,7 @@ class User < ApplicationRecord
       result = []
       leftover = self.deposit 
       [100,50,20,10,5].each do |coin_value|
-        result << leftover / coin_value
+        result << "#{leftover / coin_value} x #{coin_value}"
         leftover = leftover % coin_value
       end
       return result
