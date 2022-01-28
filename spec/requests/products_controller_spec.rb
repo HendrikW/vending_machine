@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # --- helper  --> this should be moved into its own module
@@ -22,7 +24,7 @@ RSpec.describe 'ProductsControllers', type: :request do
 
   describe 'GET /products' do
     it 'returns successful status code' do
-      get '/products', as: :json, headers: { 'HTTP_AUTHORIZATION' => 'Bearer ' + create_jwt_token(buyer) }
+      get '/products', as: :json, headers: { 'HTTP_AUTHORIZATION' => "Bearer #{create_jwt_token(buyer)}" }
 
       expect(response).to have_http_status(:success)
     end
