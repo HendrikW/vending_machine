@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-# --- helper  --> this should be moved into its own module
+# --- helper  --> TODO: this should be moved into its own module
 def create_jwt_token(user)
   exp = Time.now.to_i + 2 # 2 minutes
   payload = {
