@@ -6,13 +6,18 @@ class UsersController < ApplicationController
   before_action :require_login, except: %i[create login]
   before_action :user_is_buyer, except: %i[create login update delete]
 
-  # @request_body The user to be created [!Hash{username: String,password: String,password_confirmation: String, role: String}]
-  # @request_body_example Example user [Hash] {"username": "seller1", "password": "test-test1", "password_confirmation": "test-test1", "role": "seller"}
+  # @request_body The user to be created [!Hash{username: String, password: String, password_confirmation: String, role: String}]
+  # @request_body_example Create a "seller" type user [Hash] {"username": "seller1", "password": "test-test1", "password_confirmation": "test-test1", "role": "seller"}
+  # @request_body_example Create a "buyer" type user [Hash] {"username": "buyer1", "password": "test-test1", "password_confirmation": "test-test1", "role": "buyer"}
+  # @response Requested User(200) [Hash{username: string, role: string, deposit: integer }]
+  # @response_example Requested User(200) [{username: "seller1", role: "seller", deposit: 0 }]
+  # @response Bad Request(400) [Hash{message: string, errors: Array<String> }]
+  # @response_example Bad Request(400) [{message: "errors during user creation", errors: ["user already exists"] }]
   def create
     begin
       user = User.new(user_params)
     rescue ArgumentError
-      render json: { message: 'role does not exist' } # TODO: figure out what is current best practice regarding https://github.com/rails/rails/issues/13971, maybe just use simple string field instead
+      render json: { message: 'role does not exist' }, status: :bad_request
       return
     end
 

@@ -28,7 +28,7 @@ OasRails.configure do |config|
 
   # Automatically detect responses from controller renders
   # Default: true
-  # config.autodiscover_responses = false
+  config.autodiscover_responses = false
 
   # API path configuration if your API is under a different namespace
   # config.api_path = "/"
