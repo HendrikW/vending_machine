@@ -98,9 +98,10 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
-    method_source (1.0.0)
+    method_source (1.1.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
+    model-to-schema (0.1.2)
     msgpack (1.4.2)
     net-imap (0.2.3)
       digest
@@ -122,6 +123,10 @@ GEM
       racc (~> 1.4)
     nokogiri (1.13.1-x86_64-linux)
       racc (~> 1.4)
+    oas_rails (0.9.0)
+      method_source (~> 1.0)
+      model-to-schema (~> 0.1.2)
+      yard (~> 0.9)
     parallel (1.21.0)
     parser (3.1.0.0)
       ast (~> 2.4.1)
@@ -202,6 +207,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yard (0.9.37)
     zeitwerk (2.5.3)
 
 PLATFORMS
@@ -214,6 +220,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   jwt
+  oas_rails
   pg
   puma (~> 5.0)
   rails (~> 7.0.1)

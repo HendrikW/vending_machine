@@ -1,8 +1,11 @@
-PASSWORD_REQUIREMENTS = /\A 
+# frozen_string_literal: true
+
+PASSWORD_REQUIREMENTS = /\A
  (?=.{8,}) # minimum length 8
  (?=.*\d)  # at least one number
 /x
 
+# User class
 class User < ApplicationRecord
   has_secure_password
   validates :password_confirmation, presence: true, if: :password
@@ -13,37 +16,37 @@ class User < ApplicationRecord
   enum role: %i[buyer seller]
   validates :role, presence: true
 
-  has_many :products, foreign_key: :seller_id # note  "dependent: :destroy"  is being handled at database level using on_delete: cascase
+  # NOTE: "dependent: :destroy" is being handled at database level using on_delete: cascade
+  has_many :products, foreign_key: :seller_id
 
   def deposit
     super || 0
   end
 
   def deposit_coin(coin_value)
-    unless [5, 10, 20, 50, 100].include?(coin_value)
-      return false
-    end
-    self.deposit = self.deposit + coin_value
+    return false unless [5, 10, 20, 50, 100].include?(coin_value)
+
+    self.deposit = deposit + coin_value
     true
   end
 
   def deposit_coin!(coin_value)
-    if deposit_coin(coin_value) 
-      self.save!
-       return true
+    if deposit_coin(coin_value)
+      save!
+      return true
     end
     false
   end
 
-    # the change the vending machine has to return with optimal coin allocation
-  def availabe_change
+  # the change the vending machine has to return with optimal coin allocation
+  def available_change
     result = []
-    leftover = self.deposit 
-    [100,50,20,10,5].each do |coin_value|
+    leftover = deposit
+    [100, 50, 20, 10, 5].each do |coin_value|
       result << "#{leftover / coin_value} x #{coin_value}"
       leftover = leftover % coin_value
     end
-    return result
+    result
   end
 
   def as_json(options = nil)

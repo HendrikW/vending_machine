@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index"
+  root to: 'application#not_found'
 
   resources :users, only: [:create]
   put '/account', to: 'users#update'
@@ -13,4 +15,6 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show, :create, :update, :destroy]
   post '/buy', to: 'products#buy'
+
+  mount OasRails::Engine => '/docs'
 end
