@@ -1,4 +1,4 @@
-# README
+# Vending Machine (a Rails+JWT API)
 
 JWT auth demonstrator project. It'a a Rails API that functions as a vending machine: Different sellers can place their products inside, buyers can insert coins, buy stuff, and receive change. 
 
