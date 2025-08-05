@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   before_action :require_login, except: %i[create login]
   before_action :user_is_buyer, except: %i[create login update delete]
 
+  # @request_body The user to be created [!Hash{username: String,password: String,password_confirmation: String, role: String}]
+  # @request_body_example Example user [Hash] {"username": "seller1", "password": "test-test1", "password_confirmation": "test-test1", "role": "seller"}
   def create
     begin
       user = User.new(user_params)

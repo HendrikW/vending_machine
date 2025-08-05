@@ -34,19 +34,19 @@ class ApplicationController < ActionController::API
       token.gsub!('Bearer ', '')
       decoded_array = JWT.decode token, hmac_secret, true
       payload = decoded_array.first
-  rescue JWT::ExpiredSignature => e
-    Rails.logger.warn "Token has expired: " + e.to_s
+    rescue JWT::ExpiredSignature => e
+      Rails.logger.warn "Token has expired: " + e.to_s
       return nil
-  rescue JWT::DecodeError => e
-    Rails.logger.warn "Error decoding the JWT: " + e.to_s
+    rescue JWT::DecodeError => e
+      Rails.logger.warn "Error decoding the JWT: " + e.to_s
       return nil
-  rescue 
-    Rails.logger.warn "JWT Error: " + e.to_s
+    rescue StandardError
+      Rails.logger.warn "JWT Error: " + e.to_s
       return nil
     end
-      payload
+    payload
   end
-    
+
   def current_user_id
     current_token_payload && current_token_payload['user_id']
   end
