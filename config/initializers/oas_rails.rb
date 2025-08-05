@@ -10,6 +10,7 @@ OasRails.configure do |config|
   # config.info.contact.name = 'a-chacon'
   # config.info.contact.email = 'andres.ch@proton.me'
   # config.info.contact.url = 'https://a-chacon.com'
+  config.rapidoc_theme = "coffee"
 
   # Servers Information. For more details follow: https://spec.openapis.org/oas/latest.html#server-object
   config.servers = [{ url: ENV['HOST'] }]

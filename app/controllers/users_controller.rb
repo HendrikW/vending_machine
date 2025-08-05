@@ -7,8 +7,6 @@ class UsersController < ApplicationController
   before_action :user_is_buyer, except: %i[create login update delete]
 
   # @request_body The user to be created [!Hash{username: String, password: String, password_confirmation: String, role: String}]
-  # @request_body_example Create a "seller" type user [Hash] {"username": "seller1", "password": "test-test1", "password_confirmation": "test-test1", "role": "seller"}
-  # @request_body_example Create a "buyer" type user [Hash] {"username": "buyer1", "password": "test-test1", "password_confirmation": "test-test1", "role": "buyer"}
   # @response Requested User(200) [Hash{username: string, role: string, deposit: integer }]
   # @response_example Requested User(200) [{username: "seller1", role: "seller", deposit: 0 }]
   # @response Bad Request(400) [Hash{message: string, errors: Array<String> }]
@@ -40,6 +38,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # @summary test
   def delete
     if current_user.authenticate(user_params[:password])
       current_user.destroy!
@@ -50,6 +49,7 @@ class UsersController < ApplicationController
   end
 
   # generates JWT token (valid for 20 minutes)
+  # @summary test
   def login
     user = User.find_by('lower(username) = ?', user_params[:username].downcase)
     if user&.authenticate(user_params[:password])
@@ -60,6 +60,7 @@ class UsersController < ApplicationController
   end
 
   # Deposit a coin (must be 5, 10, 20, 50 or 100)
+  # @summary test
   def deposit
     if current_user.deposit_coin!(params[:coin])
       render  json: { message: 'success', deposit: current_user.deposit }, status: :ok
@@ -68,6 +69,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # @summary test
   def reset
     leftover_change = current_user.available_change
     current_user.update!({ deposit: 0 })

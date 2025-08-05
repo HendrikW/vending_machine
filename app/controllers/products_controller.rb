@@ -50,6 +50,7 @@ class ProductsController < ApplicationController
     render json: { message: 'success' }, status: :ok
   end
 
+  # @summary test
   def buy
     product = Product.find(params[:product_id])
 
